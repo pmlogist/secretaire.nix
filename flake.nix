@@ -16,8 +16,9 @@
         system,
         ...
       }: let
-        dependencies = with pkgs;
-        with pkgs.nodePackages; [
+        node2nixPackages = pkgs.callPackage ./node2nix-packages {};
+
+        dependencies = with pkgs; [
           # Shell
           ripgrep
           fzy
@@ -30,15 +31,17 @@
           gopls
           lua-language-server
           nil # nix
-          typescript-language-server
-          vscode-langservers-extracted # json, html, css
-          svelte-language-server
+          nodePackages.typescript-language-server
+          nodePackages.vscode-langservers-extracted # json, html, css
+          nodePackages.svelte-language-server
 
           # Linter / Formatter
           stylua
           alejandra
           statix
           shfmt
+          nodePackages.eslint_d
+          node2nixPackages."@fsouza/prettierd"
         ];
       in rec {
         _module.args.pkgs = import inputs.nixpkgs {
@@ -123,7 +126,7 @@
         apps.default = apps.secretaire;
 
         devShells.default = pkgs.mkShell {
-          packages = [packages.secretaire] ++ dependencies;
+          packages = [packages.secretaire pkgs.nodePackages.node2nix] ++ dependencies;
         };
       };
     };

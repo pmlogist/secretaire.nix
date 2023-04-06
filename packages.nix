@@ -1,11 +1,11 @@
-self: super: {
+final: prev: {
   vimPlugins =
-    super.vimPlugins
+    prev.vimPlugins
     // {
-      mini-indentscope-nvim = self.vimUtils.buildVimPluginFrom2Nix {
+      mini-indentscope-nvim = final.vimUtils.buildVimPluginFrom2Nix {
         pname = "mini.indentscope";
         version = "0.7.0";
-        src = self.fetchFromGitHub {
+        src = final.fetchFromGitHub {
           owner = "echasnovski";
           repo = "mini.indentscope";
           rev = "43f6761c9a3e397b7c12b3c72f678bcf61efcfcf";
