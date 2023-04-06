@@ -27,12 +27,14 @@
 
           # LSP
           zk # markdown
-          gopls # golang
-          lua-language-server # lua
+          gopls
+          lua-language-server
           nil # nix
-          typescript-language-server #typescript
+          typescript-language-server
+          vscode-langservers-extracted # json, html, css
+          svelte-language-server
 
-          # Formatter
+          # Linter / Formatter
           stylua
           alejandra
           statix
