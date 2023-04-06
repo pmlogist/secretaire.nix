@@ -31,6 +31,7 @@
           gopls
           lua-language-server
           nil # nix
+          yaml-language-server
           nodePackages.typescript-language-server
           nodePackages.vscode-langservers-extracted # json, html, css
           nodePackages.svelte-language-server
