@@ -35,6 +35,7 @@
           nodePackages.typescript-language-server
           nodePackages.vscode-langservers-extracted # json, html, css
           nodePackages.svelte-language-server
+          nodePackages."@tailwindcss/language-server"
 
           # Linter / Formatter
           stylua
