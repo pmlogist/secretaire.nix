@@ -1,6 +1,7 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
+    nixd.url = "github:nix-community/nixd";
     parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
@@ -30,12 +31,24 @@
           zk # markdown
           gopls
           lua-language-server
-          nil # nix
+          # nixd # nix
           yaml-language-server
           nodePackages.typescript-language-server
           nodePackages.vscode-langservers-extracted # json, html, css
           nodePackages.svelte-language-server
+          nodePackages."@astrojs/language-server"
           nodePackages."@tailwindcss/language-server"
+
+          # Php
+          php82Packages.phpcs
+          php82Packages.phpcbf
+          phpactor
+
+          rnix-lsp
+
+          rustywind
+
+          nixd
 
           # Linter / Formatter
           stylua
@@ -44,11 +57,17 @@
           shfmt
           nodePackages.eslint_d
           node2nixPackages."@fsouza/prettierd"
+          node2nixPackages."dockerfile-language-server-nodejs"
+          node2nixPackages."blade-formatter"
         ];
       in rec {
         _module.args.pkgs = import inputs.nixpkgs {
           inherit system;
-          overlays = [(import ./packages.nix)];
+          config.allowUnfree = true;
+          overlays = [
+            inputs.nixd.overlays.default
+            (import ./packages.nix)
+          ];
         };
 
         formatter = pkgs.alejandra;
@@ -69,6 +88,7 @@
 
                 plenary-nvim
 
+                neodev-nvim
                 nvim-lspconfig
 
                 nvim-treesitter.withAllGrammars # better code coloring
@@ -97,20 +117,30 @@
                 cmp_luasnip # snippets completion
 
                 oil-nvim
+                # Session management
+                persistence-nvim
+                lspkind-nvim
 
                 # UI
                 indent-blankline-nvim-lua
                 mini-indentscope-nvim
 
                 noice-nvim
-                nvim-notify
 
                 neodev-nvim
+
+                lualine-nvim
 
                 neo-tree-nvim
                 nvim-web-devicons
 
+                gitsigns-nvim
+                dressing-nvim
+
                 alpha-nvim
+
+                nvim-autopairs
+                nvim-ts-autotag
 
                 nvim-colorizer-lua
               ];
